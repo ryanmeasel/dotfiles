@@ -34,3 +34,5 @@ cd dotfiles
 ## To do
 
 - Include Atom configuration
+- Update vimrc and theme
+- Prune gitconfig and change merge/diff tool
