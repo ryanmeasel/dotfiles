@@ -2,10 +2,14 @@
 #
 # Setup symlinks for the dotfiles
 
-# Create a symlink for each non-directory/license/readme/install file in the dotfiles repo
-repoDir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )   # dir of the dotfiles repo
-dotfiles=$(find . \( ! -regex '.*/\..*' \) -type f -maxdepth 1 | grep -v "README" | grep -v "LICENSE" | grep -v "install")
+# Grab a list of each non-directory/license/readme/backup/install file in the dotfiles repo
+dotfiles=$(ls | grep -v "README" | grep -v "LICENSE" | grep -v "antigen" | grep -v "backup"| grep -v "install")
+dotfiles=$(echo $dotfiles | tr '\n' ' ') # remove newlines so we can append the antigen file
 
+# Get directory we are executing from
+repoDir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+# Create symlinks for each of the dotfiles
 for dotfile in $dotfiles; do
 
     # Store any previously existing dotfiles in a backup directory
@@ -21,11 +25,12 @@ for dotfile in $dotfiles; do
     fi
 
     echo "Generating symlink to $dotfile..."
-    ln -s $dotfilesDir/$dotfile $HOME/.$dotfile
+    ln -sf $repoDir/$dotfile $HOME/.$dotfile
 done
 
-# Symlink antigen (oh-my-zsh package manager)
-ln -s $dotfilesDir/antigen/antien.zsh $HOME/.antigen.zsh
+# Symlink Antigen (oh-my-zsh package manager)
+echo "Generating symlink to Antigen..."
+ln -sf $repoDir/antigen/antigen.zsh $HOME/.antigen.zsh
 
 # Change shell to zsh
 if [ $(< /etc/shells grep zsh) ]; then
