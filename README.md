@@ -1,5 +1,5 @@
 # dotfiles
-This repository is a collection of configuration files and installation scripts to initialize new environments (new computer, VM, container, etc). 
+This repository is a collection of configuration files and installation scripts used to initialize new environments (new computer, VM, container, etc). 
 
 ## Configuartion
 
