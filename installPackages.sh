@@ -24,8 +24,10 @@ if [[ $(uname) == 'Linux' ]]; then
         sudo yum install $programs
     fi
 
-    # Install docker
-    curl -sSL https://get.docker.com/ | sh
+    # Install docker (if not already installed)
+    if [[ $(which docker) ]]; then
+        curl -sSL https://get.docker.com/ | sh
+    fi
 
 # OS X installs
 elif [[ $(uname) == 'Darwin' ]]; then
