@@ -54,9 +54,9 @@ dockerRunlocal() {
 
 ## Aliases
 # Remove all untagged docker images
-diclean='docker rmi $(docker images | grep "^<none>" | awk "{print $3}")'
+alias diclean='docker rmi $(docker images | grep "^<none>" | awk "{print $3}")'
 # Remove all stopped docker containers
-dcclean='docker rm $(docker ps -a -q)'
+alias dcclean='docker rm $(docker ps -a -q)'
 
 ## Miscellaenous
 # Load AWS credentials

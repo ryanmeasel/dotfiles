@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Install packages for linux and OS X environments
 
@@ -16,7 +16,7 @@ if [[ $(uname) == 'Linux' ]]; then
 
     # Red-hat
     if [[ -f /etc/debian_version ]]; then
-        sudo apt-get install $programs
+        sudo apt-get install -y $programs
     fi
 
     # Debian
