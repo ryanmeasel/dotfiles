@@ -33,7 +33,7 @@ echo "Generating symlink to Antigen..."
 ln -sf $repoDir/antigen/antigen.zsh $HOME/.antigen.zsh
 
 # Change shell to zsh
-if [ $(< /etc/shells grep zsh) ]; then
+if [[ $(< /etc/shells grep zsh) ]]; then
 
     echo "Changing to ZSH..."
 
