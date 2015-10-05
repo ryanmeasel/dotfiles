@@ -1,27 +1,28 @@
 #!/bin/bash
 #
-# Install packages for linux and OS X environments
+# Install pkgs for linux and OS X environments
 
-# linux and osx packages
-packages="wget curl zsh autojump vim git-flow"
+# linux and osx pkgs
+pkgs="wget curl zsh autojump vim git-flow"
 # osx only programs
-brew_packages="caskroom/cask/brew-cask"
+brew_pkgs="caskroom/cask/brew-cask"
 # osx programs distributed as binaries
-brew_cask_packages="atom google-chrome gimp vlc"
+brew_cask_pkgs="atom google-chrome gimp vlc"
 
 # Linux installs
 if [[ $(uname) == 'Linux' ]]; then
 
     echo "Installing Linux packages..."
 
-    # Red-hat
+    # Debian
     if [[ -f /etc/debian_version ]]; then
-        sudo apt-get install -y $programs
+        sudo apt-get update
+        sudo apt-get install -y $pkgs
     fi
 
-    # Debian
+    # Red-hat
     if [[ -f /etc/redhat-release ]]; then
-        sudo yum install $programs
+        sudo yum install $pkgs
     fi
 
     # Install docker (if not already installed)
@@ -37,7 +38,7 @@ elif [[ $(uname) == 'Darwin' ]]; then
     # Install Brew (OSX package manager)
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-    # Install Brew packages and brew cask pacakges
+    # Install Brew pkgs and brew cask pacakges
     brew install $brew_programs
-    # brew cask install $brew_cask_packages
+    # brew cask install $brew_cask_pkgs
 fi
