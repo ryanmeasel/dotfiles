@@ -25,7 +25,7 @@ if [[ $(uname) == 'Linux' ]]; then
     fi
 
     # Install docker (if not already installed)
-    if [[ $(which docker) ]]; then
+    if [[ ! $(which docker) ]]; then
         curl -sSL https://get.docker.com/ | sh
     fi
 
