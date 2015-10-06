@@ -11,7 +11,7 @@ NC='\033[0m' # No Color
 repoDir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 # Grab a list of each non-directory/license/readme/backup/install file in the dotfiles repo
-dotfiles=$(ls $repoDir | grep -v "README" | grep -v "LICENSE" | grep -v "antigen" | grep -v "backup"| grep -v "install")
+dotfiles=$(ls $repoDir | grep -v "README" | grep -v "LICENSE" | grep -v "antigen" | grep -v "gitlocal"| grep -v "backup"| grep -v "install")
 dotfiles=$(echo $dotfiles | tr '\n' ' ') # remove newlines so we can append the antigen file
 
 # Ensure the Antigen submodule was downloaded
