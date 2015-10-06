@@ -14,6 +14,12 @@ dotfiles=$(echo $dotfiles | tr '\n' ' ') # remove newlines so we can append the 
 # Get the dir we are executing from
 repoDir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
+# Ensure the Antigen submodule was downloaded
+if [[ ! -e $repoDir/antigen/antigen.zsh ]]; then
+    printf "${RED}** Antigen submodule has not been downloaded. Install with:\n\n\t git submodule update --init --recursive\n${NC}"
+    exit 1
+fi
+
 # Function to create a backup dir. Only invoked if a backup needs to be stored.
 createBackupDir () {
     # Create the backup directory if it doesn't exist
@@ -32,27 +38,27 @@ for dotfile in $dotfiles; do
 
         # Move files / copy symlink targets to the backup dir
         if [[ ! -L $HOME/.$dotfile ]]; then             # regular file
-            
+
             createBackupDir
-            
+
             mv $HOME/.$dotfile $repoDir/backup/$dotfile
             printf "$HOME/.$dotfile already exists...\n"
             printf ":: Moved $HOME/.$dotfile to $repoDir/backup\n"
 
         else                                            # symlink
-    
+
             # Get the target of the symlink
             targetFile=$(ls -l $HOME/.$dotfile | awk '{print $11}')
-     
+
             # Only make a backup if we aren't symlinking to the same file
             if [[ $(diff $dotfile $targetFile) ]]; then
-                
+
                 createBackupDir
 
                 cp $targetFile $repoDir/backup/$dotfile
-                printf "$HOME/.$dotfile is a symbolic link to $targetFile\n" 
+                printf "$HOME/.$dotfile is a symbolic link to $targetFile\n"
                 printf ":: Copied $targetFile to $repoDir/backup\n"
-            fi 
+            fi
         fi
     fi
 
