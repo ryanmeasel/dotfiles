@@ -3,18 +3,9 @@
 [user]
 	name = Ryan Measel
 	email = ryanmeasel@gmail.com
-[credential]
-	helper = osxkeychain
-[merge]
-	tool = diffmerge
 [color]
 	ui = true
-[diff]
-	tool = diffmerge
-[difftool "diffmerge"]
-	cmd = /usr/bin/diffmerge \"$LOCAL\" \"$REMOTE\"
-[mergetool "diffmerge"]
-	trustExitCode = true
-	cmd = /usr/bin/diffmerge --merge --result=\"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
 [push]
 	default = simple
+[include]
+    path = .gitlocal

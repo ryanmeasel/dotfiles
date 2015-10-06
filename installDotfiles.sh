@@ -7,12 +7,12 @@ RED='\033[1;31m'
 GREEN='\033[1;32m'
 NC='\033[0m' # No Color
 
-# Grab a list of each non-directory/license/readme/backup/install file in the dotfiles repo
-dotfiles=$(ls | grep -v "README" | grep -v "LICENSE" | grep -v "antigen" | grep -v "backup"| grep -v "install")
-dotfiles=$(echo $dotfiles | tr '\n' ' ') # remove newlines so we can append the antigen file
-
 # Get the dir we are executing from
 repoDir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+# Grab a list of each non-directory/license/readme/backup/install file in the dotfiles repo
+dotfiles=$(ls $repoDir | grep -v "README" | grep -v "LICENSE" | grep -v "antigen" | grep -v "backup"| grep -v "install")
+dotfiles=$(echo $dotfiles | tr '\n' ' ') # remove newlines so we can append the antigen file
 
 # Ensure the Antigen submodule was downloaded
 if [[ ! -e $repoDir/antigen/antigen.zsh ]]; then
@@ -63,28 +63,43 @@ for dotfile in $dotfiles; do
     fi
 
     # Create the symlink
-    printf "${GREEN}++ Generated symlink to $dotfile${NC}\n"
     ln -sf $repoDir/$dotfile $HOME/.$dotfile
+    printf "${GREEN}++ Generated symlink to $dotfile${NC}\n"
 done
 
 # Symlink Antigen (oh-my-zsh package manager)
-printf "${GREEN}++ Generated symlink to Antigen${NC}\n"
 ln -sf $repoDir/antigen/antigen.zsh $HOME/.antigen.zsh
+printf "${GREEN}++ Generated symlink to Antigen${NC}\n"
+
+# Symlink github include
+if [[ $(uname) == 'Linux' ]]; then
+    ln -sf $repoDir/gitlocal-linux $HOME/.gitlocal
+    printf "${GREEN}++ Generated symlink to gitlocal-linux${NC}\n"
+elif [[ $(uname) == 'Darwin' ]]; then
+    ln -sf $repoDir/gitlocal-osx $HOME/.gitlocal
+    printf "${GREEN}++ Generated symlink to gitlocal-osx${NC}\n"
+fi
 
 # Change shell to zsh
-if [[ $(< /etc/shells grep zsh) ]]; then
+if [[ $(command -v zsh) ]]; then
 
     printf "Changing shell to ZSH...\n"
 
-    if [[ ! $(echo $SHELL) == $(which zsh) ]]; then
-        chsh -s $(which zsh)
+    if [[ $SHELL != $(command -v zsh) ]]; then
+
+        # Add to the shells list if it's not already on it
+        if [[ ! $(< /etc/shells grep $(command -v zsh)) ]]; then
+            sudo bash -c "echo $(command -v zsh) >> /etc/shells"
+        fi
+
+        chsh -s $(command -v zsh)
         printf "${GREEN}:: Shell changed to ZSH${NC}\n"
     else
         printf "ZSH is already running.\n"
     fi
 
-    source $HOME/.zshrc
-
+    # Execute the new shell
+    $(command -v zsh)
 else
     printf "${RED}** ZSH has not been installed${NC}\n"
 fi
