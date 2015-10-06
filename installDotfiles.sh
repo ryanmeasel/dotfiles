@@ -77,7 +77,7 @@ if [[ $(< /etc/shells grep zsh) ]]; then
     printf "Changing shell to ZSH...\n"
 
     if [[ ! $(echo $SHELL) == $(which zsh) ]]; then
-        chsh -s $(which zsh)
+        chsh $USER -s $(which zsh)
         printf "${GREEN}:: Shell changed to ZSH${NC}\n"
     else
         printf "ZSH is already running.\n"
