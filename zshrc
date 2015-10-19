@@ -9,7 +9,7 @@ antigen bundle git-extras
 antigen bundle git-flow
 antigen bundle pip
 antigen bundle command-not-found
-antigen bundle autojump
+antigen bundle fasd
 antigen bundle common-aliases
 antigen bundle aws
 antigen bundle atom
@@ -59,6 +59,9 @@ alias diclean='docker rmi $(docker images | grep "^<none>" | awk "{print $3}")'
 alias dcclean='docker rm $(docker ps -a -q)'
 
 ## Miscellaenous
+# Initialize fasd
+eval "$(fasd --init auto)"
+
 # Load AWS credentials
 if [[ -e $HOME/.aws/exportCredentials.sh ]]; then
     source $HOME/.aws/exportCredentials.sh

@@ -3,7 +3,7 @@
 # Install pkgs for linux and OS X environments
 
 # linux and osx pkgs
-pkgs="wget curl zsh autojump vim git-flow"
+pkgs="wget curl zsh vim git-flow"
 # osx only programs
 brew_pkgs="caskroom/cask/brew-cask"
 # osx programs distributed as binaries
@@ -42,3 +42,13 @@ elif [[ $(uname) == 'Darwin' ]]; then
     brew install $brew_programs
     # brew cask install $brew_cask_pkgs
 fi
+
+# Install fasd
+echo "Installing fasd..."
+wget -qO- https://github.com/clvv/fasd/archive/1.0.1.tar.gz | tar xz
+cd fasd-1.0.1
+make install
+cd ..
+rm -rf fasd-1.0.1
+
+echo "Done."
