@@ -1,3 +1,19 @@
+## Path
+# ZSH automatically launches into a tmux session on launch
+export ZSH_TMUX_AUTOSTART=true
+
+# Golang environment
+export GOPATH=$HOME/Developer/sandbox/gocode
+export GOROOT=/usr/local/opt/go/libexec/bin
+
+# Android environment on OS X
+export ANDROID_PATH="/usr/local/Cellar/android-platform-tools/22.0.0/bin/:/Users/ryan/bin:/Users/ryan/Library/Android/sdk/build-tools/22.0.1/"
+
+# Main path
+export PATH=$GOROOT:$GOPATH:"/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin:/Users/ryan/bin":$ANDROID_PATH
+
+
+## ZSH Packages
 source $HOME/.antigen.zsh
 
 # Load the oh-my-zsh's library.
@@ -35,19 +51,6 @@ antigen bundle sindresorhus/pure
 # Apply the packages and theme
 antigen apply
 
-## Path
-# ZSH automatically launches into a tmux session on launch
-export ZSH_TMUX_AUTOSTART=true
-
-# Golang environment
-export GOPATH=$HOME/Developer/sandbox/gocode
-export GOROOT=/usr/local/opt/go/libexec/bin
-
-# Android environment on OS X
-export ANDROID_PATH="/usr/local/Cellar/android-platform-tools/22.0.0/bin/:/Users/ryan/bin:/Users/ryan/Library/Android/sdk/build-tools/22.0.1/"
-
-# Main path
-export PATH=$GOROOT:$GOPATH:"/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin:/Users/ryan/bin":$ANDROID_PATH
 
 ## Functions
 # Make a directory and cd into it
@@ -61,11 +64,13 @@ ebRunLocal() {
     eb local run --envvars AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
 }
 
+
 ## Aliases
 # Remove all untagged docker images
 alias diclean='docker rmi $(docker images -f "dangling=true" -q)'
 # Remove all stopped docker containers
 alias dcclean='docker rm $(docker ps -a -q)'
+
 
 ## Miscellaenous
 # Initialize fasd
