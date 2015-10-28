@@ -3,7 +3,7 @@
 # Install pkgs for linux and OS X environments
 
 # linux and osx pkgs
-pkgs="wget curl zsh vim git-flow"
+pkgs="wget curl zsh vim git-flow tmux"
 # osx only programs
 brew_pkgs="caskroom/cask/brew-cask"
 # osx programs distributed as binaries

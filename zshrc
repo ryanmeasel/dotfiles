@@ -8,8 +8,10 @@ antigen bundle git
 antigen bundle git-extras
 antigen bundle git-flow
 antigen bundle pip
+antigen bundle jsontools
 antigen bundle command-not-found
 antigen bundle fasd
+antigen bundle tmux
 antigen bundle common-aliases
 antigen bundle aws
 antigen bundle atom
@@ -26,17 +28,25 @@ if [[ $(uname) == 'Darwin' ]]; then
     antigen bundle osx
 fi
 
-# Apply the pure theme
+# Install the Pure theme
 antigen bundle mafredri/zsh-async
 antigen bundle sindresorhus/pure
 
-# Apply the packages and themes
+# Apply the packages and theme
 antigen apply
 
 ## Path
-GOPATH=$HOME/Developer/sandbox/gocode
-GOROOT=/usr/local/opt/go/libexec/bin
-ANDROID_PATH="/usr/local/Cellar/android-platform-tools/22.0.0/bin/:/Users/ryan/bin:/Users/ryan/Library/Android/sdk/build-tools/22.0.1/"
+# ZSH automatically launches into a tmux session on launch
+export ZSH_TMUX_AUTOSTART=true
+
+# Golang environment
+export GOPATH=$HOME/Developer/sandbox/gocode
+export GOROOT=/usr/local/opt/go/libexec/bin
+
+# Android environment on OS X
+export ANDROID_PATH="/usr/local/Cellar/android-platform-tools/22.0.0/bin/:/Users/ryan/bin:/Users/ryan/Library/Android/sdk/build-tools/22.0.1/"
+
+# Main path
 export PATH=$GOROOT:$GOPATH:"/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin:/Users/ryan/bin":$ANDROID_PATH
 
 ## Functions
@@ -46,15 +56,14 @@ mkcd() {
     cd "$_";
 }
 
-# Build a docker image and run it locally
-dockerRunlocal() {
-    docker build -t $@ .
-    docker run -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY  --publish 80:8080 --name test --rm $@
+# Deploy an elastic beanstalk application locally
+ebRunLocal() {
+    eb local run --envvars AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
 }
 
 ## Aliases
 # Remove all untagged docker images
-alias diclean='docker rmi $(docker images | grep "^<none>" | awk "{print $3}")'
+alias diclean='docker rmi $(docker images -f "dangling=true" -q)'
 # Remove all stopped docker containers
 alias dcclean='docker rm $(docker ps -a -q)'
 
