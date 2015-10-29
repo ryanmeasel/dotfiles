@@ -2,22 +2,27 @@
 #
 # Install pkgs for linux and OS X environments
 
+# Colors to make output pretty
+RED='\033[1;31m'
+GREEN='\033[1;32m'
+NC='\033[0m' # No Color
+
 # linux and osx pkgs
 pkgs="wget curl zsh vim git-flow tmux"
 # osx only programs
-brew_pkgs="caskroom/cask/brew-cask"
+brew_pkgs="caskroom/cask/brew-cask reattach-to-user-namespace"
 # osx programs distributed as binaries
 brew_cask_pkgs="atom google-chrome gimp vlc"
 
 # Linux installs
 if [[ $(uname) == 'Linux' ]]; then
 
-    echo "Installing Linux packages..."
+    print "${GREEN}** Installing Linux packages...${NC}\n"
 
     # Debian
     if [[ -f /etc/debian_version ]]; then
         sudo apt-get update
-        sudo apt-get install -y $pkgs
+        sudo apt-get install -y --no-install-recommended $pkgs
     fi
 
     # Red-hat
@@ -33,7 +38,7 @@ if [[ $(uname) == 'Linux' ]]; then
 # OS X installs
 elif [[ $(uname) == 'Darwin' ]]; then
 
-    echo "Installing OS X packages..."
+    print "${GREEN}** Installing OS X packages...${NC}\n"
 
     # Install Brew (OSX package manager)
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -44,11 +49,11 @@ elif [[ $(uname) == 'Darwin' ]]; then
 fi
 
 # Install fasd
-echo "Installing fasd..."
+print "${GREEN}** Installing fasd...${NC}\n"
 wget -qO- https://github.com/clvv/fasd/archive/1.0.1.tar.gz | tar xz
 cd fasd-1.0.1
 make install
 cd ..
 rm -rf fasd-1.0.1
 
-echo "Done."
+print "${GREEN}** Done. ✓${NC}\n"
