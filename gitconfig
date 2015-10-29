@@ -8,4 +8,4 @@
 [push]
 	default = simple
 [include]
-    path = .gitlocal
+    path = .gitconfig.local
