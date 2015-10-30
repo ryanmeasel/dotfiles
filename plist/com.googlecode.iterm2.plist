@@ -862,7 +862,7 @@
 			<key>Name</key>
 			<string>17pt, Menlo</string>
 			<key>Non Ascii Font</key>
-			<string>Inconsolata 19</string>
+			<string>Menlo-Regular 17</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
@@ -1044,7 +1044,7 @@
 	<key>NoSyncTimeOfLastPromo</key>
 	<real>465798882.47778797</real>
 	<key>NoSyncTimeOfLastPromoDownload</key>
-	<real>467752748.31647998</real>
+	<real>467881376.02134401</real>
 	<key>OnlyWhenMoreTabs</key>
 	<false/>
 	<key>OpenArrangementAtStartup</key>
