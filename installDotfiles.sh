@@ -11,7 +11,7 @@ NC='\033[0m' # No Color
 repoDir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 # Grab a list of each non-directory/license/readme/backup/install file in the dotfiles repo
-dotfiles=$(ls $repoDir | grep -v "README" | grep -v "LICENSE" | grep -v "antigen" | grep -v "local"| grep -v "backup"| grep -v "install")
+dotfiles=$(ls $repoDir/conf/)
 dotfiles=$(echo $dotfiles | tr '\n' ' ') # remove newlines so we can append the antigen file
 
 # Ensure the Antigen submodule was downloaded
@@ -63,19 +63,19 @@ for dotfile in $dotfiles; do
     fi
 
     # Create the symlink
-    ln -sf $repoDir/$dotfile $HOME/.$dotfile
+    ln -sf $repoDir/conf/$dotfile $HOME/.$dotfile
     printf "${GREEN}++ Generated symlink to $dotfile${NC}\n"
 done
 
 # Gather platform dependent configs
-localDotfiles=$(ls | grep $(uname))
+localDotfiles=$(ls $repoDir/conf/ | grep $(uname))
 
 # Symlink platform dependent configs
 for dotfile in $localDotfiles; do
 
     targetFile=$(echo $dotfile | awk  -F'-' '{print $1}')
 
-    ln -sf $repoDir/$dotfile $HOME/.$targetFile
+    ln -sf $repoDir/conf/$dotfile $HOME/.$targetFile
     printf "${GREEN}++ Generated symlink to $dotfile${NC}\n"
 done
 
