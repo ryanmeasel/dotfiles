@@ -18,7 +18,7 @@ Compatible with Linux and OS X.
 
 ## Installation Files
 
-- `installPackages.sh`: Installs a collection of common packages I use including wget, curl, zsh, autojump, vim, git-flow, etc.
+- `installPackages.sh`: Installs a collection of common packages.
 - `installDotfiles.sh`: Installs the configuration files by backing up existing configuration files
 (into /path/to/this/repo/backup/) and replacing them with symlinks to the files in this repo. It also
 attempts to change the shell to Zsh.
@@ -35,5 +35,7 @@ cd dotfiles
 
 ## To do
 
-- Include Atom configuration
-- Update vimrc and theme
+- Add Atom config
+- Update vimrc
+- Apply consistent theme
+- Combine install scripts into one
