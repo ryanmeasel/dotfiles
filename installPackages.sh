@@ -9,7 +9,9 @@ NC='\033[0m' # No Color
 
 # linux and osx pkgs
 pkgs="wget curl zsh vim git-flow tmux"
-# osx only programs
+# linux only pkgs
+linux_pkgs="ttf-dejavu"
+# osx only pkgs
 brew_pkgs="caskroom/cask/brew-cask reattach-to-user-namespace"
 # osx programs distributed as binaries
 brew_cask_pkgs="atom google-chrome gimp vlc"
@@ -22,12 +24,12 @@ if [[ $(uname) == 'Linux' ]]; then
     # Debian
     if [[ -f /etc/debian_version ]]; then
         sudo apt-get update
-        sudo apt-get install -y --no-install-recommended $pkgs
+        sudo apt-get install -y --no-install-recommended $pkgs $linux_pkgs
     fi
 
     # Red-hat
     if [[ -f /etc/redhat-release ]]; then
-        sudo yum install $pkgs
+        sudo yum install $pkgs $linux_pkgs
     fi
 
     # Install docker (if not already installed)
@@ -44,8 +46,8 @@ elif [[ $(uname) == 'Darwin' ]]; then
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
     # Install Brew pkgs and brew cask pacakges
-    brew install $brew_programs
-    # brew cask install $brew_cask_pkgs
+    brew install $pkgs $brew_pkgs
+    brew cask install $brew_cask_pkgs
 fi
 
 # Install fasd
