@@ -14,7 +14,7 @@ linux_pkgs="ttf-dejavu"
 # osx only pkgs
 brew_pkgs="caskroom/cask/brew-cask reattach-to-user-namespace"
 # osx programs distributed as binaries
-brew_cask_pkgs="atom google-chrome gimp vlc"
+brew_cask_pkgs="atom google-chrome gimp vlc iterm2"
 
 # Linux installs
 if [[ $(uname) == 'Linux' ]]; then
