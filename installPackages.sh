@@ -19,7 +19,7 @@ brew_cask_pkgs="atom google-chrome gimp vlc"
 # Linux installs
 if [[ $(uname) == 'Linux' ]]; then
 
-    print "${GREEN}** Installing Linux packages...${NC}\n"
+    printf "${GREEN}** Installing Linux packages...${NC}\n"
 
     # Debian
     if [[ -f /etc/debian_version ]]; then
@@ -40,7 +40,7 @@ if [[ $(uname) == 'Linux' ]]; then
 # OS X installs
 elif [[ $(uname) == 'Darwin' ]]; then
 
-    print "${GREEN}** Installing OS X packages...${NC}\n"
+    printf "${GREEN}** Installing OS X packages...${NC}\n"
 
     # Install Brew (OSX package manager)
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -51,11 +51,11 @@ elif [[ $(uname) == 'Darwin' ]]; then
 fi
 
 # Install fasd
-print "${GREEN}** Installing fasd...${NC}\n"
+printf "${GREEN}** Installing fasd...${NC}\n"
 wget -qO- https://github.com/clvv/fasd/archive/1.0.1.tar.gz | tar xz
 cd fasd-1.0.1
 make install
 cd ..
 rm -rf fasd-1.0.1
 
-print "${GREEN}** Done. ✓${NC}\n"
+printf "${GREEN}** Done. ✓${NC}\n"
