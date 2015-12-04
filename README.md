@@ -16,7 +16,7 @@ Compatible with Linux and OS X.
   - [git](https://git-scm.com/)
   - [git-flow](https://github.com/nvie/gitflow)
 
-## Installation Files
+## Scripts
 
 - `installPackages.sh`: Installs a collection of common packages.
 - `installDotfiles.sh`: Installs the configuration files by backing up existing configuration files
@@ -27,11 +27,26 @@ attempts to change the shell to Zsh.
 
 ## Installation
 
+### OS X
+
 ```Shell
+xcode-select --install
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+brew install git
 git clone --recursive https://github.com/ryanmeasel/dotfiles.git
 cd dotfiles
 ./installAll.sh
 ```
+
+### Debian
+
+```Shell
+apt-get install git
+git clone --recursive https://github.com/ryanmeasel/dotfiles.git
+cd dotfiles
+./installAll.sh
+```
+
 
 ## To do
 
