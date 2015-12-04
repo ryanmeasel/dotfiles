@@ -54,3 +54,4 @@ cd dotfiles
 - Update vimrc
 - Apply consistent theme
 - Combine install scripts into one
+- separate OSX only commands
