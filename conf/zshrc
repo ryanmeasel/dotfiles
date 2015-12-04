@@ -1,16 +1,16 @@
 ## Path
 # ZSH automatically launches into a tmux session on launch
-export ZSH_TMUX_AUTOSTART=true
+export ZSH_TMUX_AUTOSTART=false
 
 # Golang environment
 export GOPATH=$HOME/Developer/sandbox/gocode
-export GOROOT=/usr/local/opt/go/libexec/bin
+export GOROOT=/usr/local/go
 
 # Android environment on OS X
 export ANDROID_PATH="/usr/local/Cellar/android-platform-tools/22.0.0/bin/:/Users/ryan/bin:/Users/ryan/Library/Android/sdk/build-tools/22.0.1/"
 
 # Main path
-export PATH=$GOROOT:$GOPATH:"/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin:/Users/ryan/bin":$ANDROID_PATH
+export PATH=$GOROOT/bin:$GOPATH:"/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin:/Users/ryan/bin":$ANDROID_PATH
 
 
 ## ZSH Packages
@@ -59,17 +59,17 @@ mkcd() {
     cd "$_";
 }
 
-# Deploy an elastic beanstalk application locally
-ebRunLocal() {
-    eb local run --envvars AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-}
-
 
 ## Aliases
 # Remove all untagged docker images
 alias diclean='docker rmi $(docker images -f "dangling=true" -q)'
 # Remove all stopped docker containers
 alias dcclean='docker rm $(docker ps -a -q)'
+# Deploy an elastic beanstalk application locally
+alias ebRunLocal='eb local run --envvars AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY'
+# Rebuild the Launch Services databse on OS X
+alias rebuildLaunchServices='/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/ lsregister -kill -r -domain local -domain user'
+
 
 
 ## Miscellaenous
