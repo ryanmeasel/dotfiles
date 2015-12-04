@@ -12,9 +12,9 @@ pkgs="wget curl zsh vim git-flow tmux"
 # linux only pkgs
 linux_pkgs="ttf-dejavu"
 # osx only pkgs
-brew_pkgs="caskroom/cask/brew-cask reattach-to-user-namespace"
+brew_pkgs="caskroom/cask/brew-cask reattach-to-user-namespace mono"
 # osx programs distributed as binaries
-brew_cask_pkgs="atom google-chrome gimp vlc iterm2"
+brew_cask_pkgs="atom google-chrome gimp vlc iterm2 slack"
 
 # Linux installs
 if [[ $(uname) == 'Linux' ]]; then
