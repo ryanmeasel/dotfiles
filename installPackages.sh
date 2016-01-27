@@ -48,6 +48,12 @@ elif [[ $(uname) == 'Darwin' ]]; then
     # Install Brew pkgs and brew cask pacakges
     brew install $pkgs $brew_pkgs
     brew cask install $brew_cask_pkgs
+
+    # Install .NET Version Manager (DNVM) and .NET Execution Environment (DNX)
+    # for omnisharp use with Atom
+    curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh && source ~/.dnx/dnvm/dnvm.sh
+    dnvm install latest
+    dnvm upgrade -r mono
 fi
 
 # Install fasd
@@ -57,5 +63,8 @@ cd fasd-1.0.1
 make install
 cd ..
 rm -rf fasd-1.0.1
+
+# Install Tmux Plugin Manager
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 printf "${GREEN}** Done. ✓${NC}\n"

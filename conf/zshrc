@@ -38,7 +38,7 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-history-substring-search ./zsh-history-substring-search.zsh
 
 # OS X  packages
-if [[ $(uname) == 'Darwin' ]]; then
+if [[ $(uname) == 'darwin' ]]; then
     antigen bundle brew
     antigen bundle brew-cask
     antigen bundle osx
@@ -59,6 +59,7 @@ mkcd() {
     cd "$_";
 }
 
+# Docker image to clean up
 
 ## Aliases
 # Remove all untagged docker images
@@ -81,4 +82,11 @@ if [[ -e $HOME/.aws/exportCredentials.sh ]]; then
     source $HOME/.aws/exportCredentials.sh
 else
     echo "WARNING: No AWS credentials found."
+fi
+
+## OS specific
+
+if [[ $(uname) == 'darwin' ]]; then
+    # Load dnvm for mono (omnisharp compatibility in Atom)
+    [ -s "/Users/ryan/.dnx/dnvm/dnvm.sh" ] && . "/Users/ryan/.dnx/dnvm/dnvm.sh"
 fi
