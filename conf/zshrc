@@ -6,11 +6,14 @@ export ZSH_TMUX_AUTOSTART=false
 export GOPATH=$HOME/Developer/sandbox/gocode
 export GOROOT=/usr/local/go
 
-# Android environment on OS X
-export ANDROID_PATH="/usr/local/Cellar/android-platform-tools/22.0.0/bin/:/Users/ryan/bin:/Users/ryan/Library/Android/sdk/build-tools/22.0.1/"
+# Setup path 
+export PATH=$GOROOT/bin:$GOPATH:"/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin:/Users/ryan/bin"
 
-# Main path
-export PATH=$GOROOT/bin:$GOPATH:"/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin:/Users/ryan/bin":$ANDROID_PATH
+# Android environment on OS X
+if [[ $(uname) == 'Darwin' ]]; then
+    export ANDROID_PATH="/usr/local/android/android-sdk-macosx/tools:/usr/local/android/android-sdk-macosx/platform-tools"
+    export PATH=$PATH:$ANDROID_PATH
+fi
 
 
 ## ZSH Packages
@@ -38,7 +41,7 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-history-substring-search ./zsh-history-substring-search.zsh
 
 # OS X  packages
-if [[ $(uname) == 'darwin' ]]; then
+if [[ $(uname) == 'Darwin' ]]; then
     antigen bundle brew
     antigen bundle brew-cask
     antigen bundle osx
@@ -72,7 +75,6 @@ alias ebRunLocal='eb local run --envvars AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID,AW
 alias rebuildLaunchServices='/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/ lsregister -kill -r -domain local -domain user'
 
 
-
 ## Miscellaenous
 # Initialize fasd
 eval "$(fasd --init auto)"
@@ -85,8 +87,7 @@ else
 fi
 
 ## OS specific
-
-if [[ $(uname) == 'darwin' ]]; then
+if [[ $(uname) == 'Darwin' ]]; then
     # Load dnvm for mono (omnisharp compatibility in Atom)
     [ -s "/Users/ryan/.dnx/dnvm/dnvm.sh" ] && . "/Users/ryan/.dnx/dnvm/dnvm.sh"
 fi
