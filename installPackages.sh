@@ -8,7 +8,7 @@ GREEN='\033[1;32m'
 NC='\033[0m' # No Color
 
 # linux and osx pkgs
-pkgs="wget curl zsh vim git-flow tmux"
+pkgs="make wget curl zsh vim git-flow tmux"
 # linux only pkgs
 linux_pkgs="ttf-dejavu"
 # osx only pkgs
@@ -65,6 +65,7 @@ cd ..
 rm -rf fasd-1.0.1
 
 # Install Tmux Plugin Manager
+printf "${GREEN}** Installing TMUX Plugin Manager (TPM)...${NC}\n"
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 printf "${GREEN}** Done. ✓${NC}\n"
