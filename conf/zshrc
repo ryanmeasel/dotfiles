@@ -65,10 +65,14 @@ mkcd() {
 # Docker image to clean up
 
 ## Aliases
+# Start docker machine
+alias dmstart='docker-machine start default && eval $(docker-machine env default)'
 # Remove all untagged docker images
 alias diclean='docker rmi $(docker images -f "dangling=true" -q)'
-# Remove all stopped docker containers
-alias dcclean='docker rm $(docker ps -a -q)'
+# Remove all exited docker containers
+alias dcclean='docker rm -v $(docker ps -a -q -f status=exited)'
+# Cleanup docker volumes
+alias dvclean='docker run -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker:/var/lib/docker --rm martin/docker-cleanup-volumes'
 # Deploy an elastic beanstalk application locally
 alias ebRunLocal='eb local run --envvars AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY'
 # Rebuild the Launch Services databse on OS X
