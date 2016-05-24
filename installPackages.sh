@@ -24,7 +24,7 @@ if [[ $(uname) == 'Linux' ]]; then
     # Debian
     if [[ -f /etc/debian_version ]]; then
         sudo apt-get update
-        sudo apt-get install -y --no-install-recommended $pkgs $linux_pkgs
+        sudo apt-get install -y $pkgs $linux_pkgs
     fi
 
     # Red-hat
