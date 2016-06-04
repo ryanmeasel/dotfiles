@@ -2,7 +2,7 @@
 #
 # Setup symlinks for the dotfiles
 
-# Colors to make output pretty
+# Colors to make output snazzy
 RED='\033[1;31m'
 GREEN='\033[1;32m'
 NC='\033[0m' # No Color
