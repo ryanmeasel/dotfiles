@@ -1,12 +1,17 @@
-## Path
+## Export variables
 # ZSH automatically launches into a tmux session on launch
 export ZSH_TMUX_AUTOSTART=false
 
-# Golang environment
-export GOPATH=$HOME/Developer/sandbox/gocode
-export GOROOT=/usr/local/go
+# Colors
+export RED='\033[1;31m'
+export GREEN='\033[1;32m'
+export NOCOLOR='\033[0m' # No Color
 
-# Setup path 
+
+## Path
+# Golang environment
+export GOPATH=$HOME/GoogleDrive/Developer/sandbox/gocode
+export GOROOT=/usr/local/go
 export PATH=$GOROOT/bin:$GOPATH:"/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin:/Users/ryan/bin"
 
 # Android environment on OS X
@@ -55,43 +60,75 @@ antigen bundle sindresorhus/pure
 antigen apply
 
 
-## Functions
-# Make a directory and cd into it
-mkcd() {
-    mkdir -p "$@"
-    cd "$_";
+## Docker
+#Start up a docker machine
+dmstart() {
+    printf "${GREEN}++ Starting docker machine...${NOCOLOR}\n"
+    docker-machine start default
+    printf "Setting environment variables... "
+    eval $(docker-machine env default)
+    printf "${GREEN}++ Docker machine started.${NOCOLOR}\n"
 }
 
-# Docker image to clean up
-
-## Aliases
-# Start docker machine
-alias dmstart='docker-machine start default && eval $(docker-machine env default)'
-# Remove all untagged docker images
-alias diclean='docker rmi $(docker images -f "dangling=true" -q)'
 # Remove all exited docker containers
-alias dcclean='docker rm -v $(docker ps -a -q -f status=exited)'
+dcclean() {
+    printf "${GREEN}++ Removing exited containers...${NOCOLOR}\n"
+    exitedContainers=$(docker ps -a -q -f status=exited)
+    if [[ -z $danglingImages ]]; then
+        printf "No exited containers to remove.\n"
+    else
+        docker rm -v $exitedContainers
+    fi
+    printf "${GREEN}++ Done. ✔${NOCOLOR}\n"
+}
+
 # Cleanup docker volumes
-alias dvclean='docker run -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker:/var/lib/docker --rm martin/docker-cleanup-volumes'
-# Deploy an elastic beanstalk application locally
-alias ebRunLocal='eb local run --envvars AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY'
-# Rebuild the Launch Services databse on OS X
-alias rebuildLaunchServices='/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/ lsregister -kill -r -domain local -domain user'
+dvclean() {
+    printf "${GREEN}++ Cleanup docker volumes...${NOCOLOR}\n"
+    docker run -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker:/var/lib/docker --rm martin/docker-cleanup-volumes
+    printf "${GREEN}++ Done. ✔${NOCOLOR}\n"
+}
+
+# Remove all dangling docker images
+diclean() {
+    printf "${GREEN}++ Removing dangling docker images...${NOCOLOR}\n"
+    danglingImages=$(docker images -f "dangling=true" -q)
+    if [[ -z $danglingImages ]]; then
+        printf "No dangling images to remove.\n"
+    else
+        docker rmi $danglingImages
+    fi
+    printf "${GREEN}++ Done. ✔${NOCOLOR}\n"
+}
+
+# Clean all volumes, containers, and images
+alias dcleanall='dcclean && dvclean && diclean'
+# Start the LaTeX container
+alias dlatex='docker run -it -v $(pwd):/latex/src/ ryanmeasel/latex bash'
+# Start the PCL container
+alias dpcl='docker run -it -v $(pwd):/pcl/src/ ryanmeasel/pcl-dev:ubuntu bash'
 
 
-## Miscellaenous
+## FASD
 # Initialize fasd
 eval "$(fasd --init auto)"
 
+
+## AWS
 # Load AWS credentials
 if [[ -e $HOME/.aws/exportCredentials.sh ]]; then
     source $HOME/.aws/exportCredentials.sh
+
+    # Deploy an elastic beanstalk application locally
+    alias ebRunLocal='eb local run --envvars AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY'
 else
     echo "WARNING: No AWS credentials found."
 fi
 
-## OS specific
+## OS X specific
 if [[ $(uname) == 'Darwin' ]]; then
     # Load dnvm for mono (omnisharp compatibility in Atom)
     [ -s "/Users/ryan/.dnx/dnvm/dnvm.sh" ] && . "/Users/ryan/.dnx/dnvm/dnvm.sh"
+    # Rebuild the Launch Services databse on OS X
+    alias rebuildLaunchServices='/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/ lsregister -kill -r -domain local -domain user'
 fi
