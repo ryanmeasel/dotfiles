@@ -14,9 +14,9 @@ export GOPATH=$HOME/GoogleDrive/Developer/sandbox/gocode
 export GOROOT=/usr/local/go
 export PATH=$GOROOT/bin:$GOPATH:"/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin:/Users/ryan/bin"
 
-# Android environment on OS X
+# Android environment on OS X (as installed by Android Studio)
 if [[ $(uname) == 'Darwin' ]]; then
-    export ANDROID_PATH="/usr/local/android/android-sdk-macosx/tools:/usr/local/android/android-sdk-macosx/platform-tools"
+    export ANDROID_PATH="/Users/ryan/Library/Android/sdk/tools:/Users/ryan/Library/Android/sdk/platform-tools"
     export PATH=$PATH:$ANDROID_PATH
 fi
 
