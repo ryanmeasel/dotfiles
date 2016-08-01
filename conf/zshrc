@@ -1,6 +1,8 @@
 ## Export variables
 # ZSH automatically launches into a tmux session on launch
 export ZSH_TMUX_AUTOSTART=false
+# Default location for python virtualenvs
+export WORKON_HOME=~/.virtualenvs
 
 # Colors
 export RED='\033[1;31m'
@@ -107,6 +109,13 @@ alias dcleanall='dcclean && dvclean && diclean'
 alias dlatex='docker run -it -v $(pwd):/latex/src/ ryanmeasel/latex bash'
 # Start the PCL container
 alias dpcl='docker run -it -v $(pwd):/pcl/src/ ryanmeasel/pcl-dev:ubuntu bash'
+
+
+## Python environment
+# Default directory for virtual environments
+mkdir -p ~/.virtualenvs
+# Activate on `autoenv`
+source ~/.autoenv/activate.sh
 
 
 ## FASD

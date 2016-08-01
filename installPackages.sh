@@ -8,13 +8,15 @@ GREEN='\033[1;32m'
 NC='\033[0m' # No Color
 
 # linux and osx pkgs
-pkgs="make wget curl zsh vim git-flow tmux"
+pkgs="make wget curl zsh vim git-flow tmux python"
 # linux only pkgs
 linux_pkgs="ttf-dejavu"
 # osx only pkgs
 brew_pkgs="caskroom/cask/brew-cask reattach-to-user-namespace mono"
 # osx programs distributed as binaries
 brew_cask_pkgs="atom google-chrome gimp vlc iterm2 slack"
+# Python packages
+pip_pkgs="virtualenv virtualenvwrapper"
 
 # Linux installs
 if [[ $(uname) == 'Linux' ]]; then
@@ -55,6 +57,10 @@ elif [[ $(uname) == 'Darwin' ]]; then
     dnvm install latest
     dnvm upgrade -r mono
 fi
+
+# Install Pip packages and autoenv
+pip install $pip_pkgs
+git clone git://github.com/kennethreitz/autoenv.git ~/.autoenv
 
 # Install fasd
 printf "${GREEN}** Installing fasd...${NC}\n"
