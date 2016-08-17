@@ -64,16 +64,18 @@ antigen apply
 
 ## Docker
 #Start up a docker machine
-dmstart() {
+dmstart() 
+{
     printf "${GREEN}++ Starting docker machine...${NOCOLOR}\n"
     docker-machine start default
-    printf "Setting environment variables... "
+    printf "Setting environment variables...\n"
     eval $(docker-machine env default)
     printf "${GREEN}++ Docker machine started.${NOCOLOR}\n"
 }
 
 # Remove all exited docker containers
-dcclean() {
+dcclean() 
+{
     printf "${GREEN}++ Removing exited containers...${NOCOLOR}\n"
     exitedContainers=$(docker ps -a -q -f status=exited)
     if [[ -z $danglingImages ]]; then
@@ -85,14 +87,16 @@ dcclean() {
 }
 
 # Cleanup docker volumes
-dvclean() {
+dvclean() 
+{
     printf "${GREEN}++ Cleanup docker volumes...${NOCOLOR}\n"
     docker run -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker:/var/lib/docker --rm martin/docker-cleanup-volumes
     printf "${GREEN}++ Done. ✔${NOCOLOR}\n"
 }
 
 # Remove all dangling docker images
-diclean() {
+diclean() 
+{
     printf "${GREEN}++ Removing dangling docker images...${NOCOLOR}\n"
     danglingImages=$(docker images -f "dangling=true" -q)
     if [[ -z $danglingImages ]]; then
@@ -141,3 +145,15 @@ if [[ $(uname) == 'Darwin' ]]; then
     # Rebuild the Launch Services databse on OS X
     alias rebuildLaunchServices='/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/ lsregister -kill -r -domain local -domain user'
 fi
+
+## Misc
+# Aliases
+alias pclv='pcl_viewer'
+
+# Make a directory and jump to it
+mkcd() 
+{
+    mkdir -p $1
+    cd $1
+}
+
