@@ -1,23 +1,31 @@
 #!/bin/bash
 #
-# Install pkgs for linux and OS X environments
+# Install pkgs for Linux and OS X environments
 
 # Colors to make output pretty
 RED='\033[1;31m'
 GREEN='\033[1;32m'
 NC='\033[0m' # No Color
 
+
+## Packages
 # linux and osx pkgs
-pkgs="make wget curl zsh vim git-flow tmux python"
+pkgs="make wget curl zsh vim git-flow tmux python tree"
+
 # linux only pkgs
 linux_pkgs="ttf-dejavu"
+
 # osx only pkgs
 brew_pkgs="caskroom/cask/brew-cask reattach-to-user-namespace mono"
+
 # osx programs distributed as binaries
 brew_cask_pkgs="atom google-chrome gimp vlc iterm2 slack"
+
 # Python packages
 pip_pkgs="virtualenv virtualenvwrapper"
 
+
+## Installation
 # Linux installs
 if [[ $(uname) == 'Linux' ]]; then
 
