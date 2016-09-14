@@ -10,7 +10,7 @@ NC='\033[0m' # No Color
 
 ## Packages
 # linux and osx pkgs
-pkgs="make wget curl zsh vim git-flow tmux python tree"
+pkgs="make wget curl zsh vim git-flow tmux pyenv tree"
 
 # linux only pkgs
 linux_pkgs="ttf-dejavu"

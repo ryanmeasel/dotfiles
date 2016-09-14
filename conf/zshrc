@@ -1,8 +1,6 @@
 ## Export variables
 # ZSH automatically launches into a tmux session on launch
 export ZSH_TMUX_AUTOSTART=false
-# Default location for python virtualenvs
-export WORKON_HOME=~/.virtualenvs
 
 # Colors
 export RED='\033[1;31m'
@@ -64,7 +62,7 @@ antigen apply
 
 ## Docker
 #Start up a docker machine
-dmstart() 
+dmstart()
 {
     printf "${GREEN}++ Starting docker machine...${NOCOLOR}\n"
     docker-machine start default
@@ -74,7 +72,7 @@ dmstart()
 }
 
 # Remove all exited docker containers
-dcclean() 
+dcclean()
 {
     printf "${GREEN}++ Removing exited containers...${NOCOLOR}\n"
     exitedContainers=$(docker ps -a -q -f status=exited)
@@ -87,7 +85,7 @@ dcclean()
 }
 
 # Cleanup docker volumes
-dvclean() 
+dvclean()
 {
     printf "${GREEN}++ Cleanup docker volumes...${NOCOLOR}\n"
     docker run -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker:/var/lib/docker --rm martin/docker-cleanup-volumes
@@ -95,7 +93,7 @@ dvclean()
 }
 
 # Remove all dangling docker images
-diclean() 
+diclean()
 {
     printf "${GREEN}++ Removing dangling docker images...${NOCOLOR}\n"
     danglingImages=$(docker images -f "dangling=true" -q)
@@ -116,9 +114,14 @@ alias dpcl='docker run -it -v $(pwd):/pcl/src/ ryanmeasel/pcl-dev:ubuntu bash'
 
 
 ## Python environment
+# Enable shims and autocomplete for pyenv
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 # Default directory for virtual environments
 mkdir -p ~/.virtualenvs
-# Activate on `autoenv`
+export WORKON_HOME=~/.virtualenvs
+# Startup the virtualenvwrapper
+source /usr/local/bin/virtualenvwrapper.sh
+# Activate `autoenv`
 source ~/.autoenv/activate.sh
 
 
@@ -151,9 +154,8 @@ fi
 alias pclv='pcl_viewer'
 
 # Make a directory and jump to it
-mkcd() 
+mkcd()
 {
     mkdir -p $1
     cd $1
 }
-
