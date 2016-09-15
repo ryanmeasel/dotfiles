@@ -116,13 +116,10 @@ alias dpcl='docker run -it -v $(pwd):/pcl/src/ ryanmeasel/pcl-dev:ubuntu bash'
 ## Python environment
 # Enable shims and autocomplete for pyenv
 if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+# Auto-activate pyenv-virtualenv
+if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 # Default directory for virtual environments
 mkdir -p ~/.virtualenvs
-export WORKON_HOME=~/.virtualenvs
-# Startup the virtualenvwrapper
-source /usr/local/bin/virtualenvwrapper.sh
-# Activate `autoenv`
-source ~/.autoenv/activate.sh
 
 
 ## FASD

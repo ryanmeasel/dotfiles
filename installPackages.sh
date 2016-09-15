@@ -10,7 +10,7 @@ NC='\033[0m' # No Color
 
 ## Packages
 # linux and osx pkgs
-pkgs="make wget curl zsh vim git-flow tmux pyenv tree"
+pkgs="make wget curl zsh vim git-flow tmux pyenv pyenv-virtualenv tree"
 
 # linux only pkgs
 linux_pkgs="ttf-dejavu"
@@ -20,9 +20,6 @@ brew_pkgs="caskroom/cask/brew-cask reattach-to-user-namespace mono"
 
 # osx programs distributed as binaries
 brew_cask_pkgs="atom google-chrome gimp vlc iterm2 slack"
-
-# Python packages
-pip_pkgs="virtualenv virtualenvwrapper"
 
 
 ## Installation
@@ -66,9 +63,9 @@ elif [[ $(uname) == 'Darwin' ]]; then
     dnvm upgrade -r mono
 fi
 
-# Install Pip packages and autoenv
-pip install $pip_pkgs
-git clone git://github.com/kennethreitz/autoenv.git ~/.autoenv
+# Install python versions
+pyenv install 2.7
+pyenv install 3.5.2
 
 # Install fasd
 printf "${GREEN}** Installing fasd...${NC}\n"
