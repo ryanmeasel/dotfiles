@@ -1,11 +1,21 @@
 ## Export variables
+# Text attributes
+export RED='\033[1;31m'
+export GREEN='\033[1;32m'
+export YELLOW='\033[1;33m'
+export BLUE='\033[1;34m'
+export PURPLE='\033[1;35m'
+export NOCOLOR='\033[0m'
+export BOLD='\033[1m'
+export UNDERLINE='\033[4m'
+
 # ZSH automatically launches into a tmux session on launch
 export ZSH_TMUX_AUTOSTART=false
 
-# Colors
-export RED='\033[1;31m'
-export GREEN='\033[1;32m'
-export NOCOLOR='\033[0m' # No Color
+# Options for pyenv installs.
+# "--enable-framework" installs python as framework which allows it to display
+# gui elements such as those created by matplotlib.
+export PYTHON_CONFIGURE_OPTS="--enable-framework"
 
 
 ## Path
@@ -13,12 +23,6 @@ export NOCOLOR='\033[0m' # No Color
 export GOPATH=$HOME/GoogleDrive/Developer/sandbox/gocode
 export GOROOT=/usr/local/go
 export PATH=$GOROOT/bin:$GOPATH:"/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin:/Users/ryan/bin"
-
-# Android environment on OS X (as installed by Android Studio)
-if [[ $(uname) == 'Darwin' ]]; then
-    export ANDROID_PATH="/Users/ryan/Library/Android/sdk/tools:/Users/ryan/Library/Android/sdk/platform-tools"
-    export PATH=$PATH:$ANDROID_PATH
-fi
 
 
 ## ZSH Packages
@@ -138,13 +142,6 @@ else
     echo "WARNING: No AWS credentials found."
 fi
 
-## OS X specific
-if [[ $(uname) == 'Darwin' ]]; then
-    # Load dnvm for mono (omnisharp compatibility in Atom)
-    [ -s "/Users/ryan/.dnx/dnvm/dnvm.sh" ] && . "/Users/ryan/.dnx/dnvm/dnvm.sh"
-    # Rebuild the Launch Services databse on OS X
-    alias rebuildLaunchServices='/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/ lsregister -kill -r -domain local -domain user'
-fi
 
 ## Misc
 # Aliases

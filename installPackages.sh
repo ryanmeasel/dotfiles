@@ -16,7 +16,7 @@ pkgs="make wget curl zsh vim git-flow tmux pyenv pyenv-virtualenv tree"
 linux_pkgs="ttf-dejavu"
 
 # osx only pkgs
-brew_pkgs="caskroom/cask/brew-cask reattach-to-user-namespace mono"
+brew_pkgs="caskroom/cask/brew-cask reattach-to-user-namespace android-platform-tools"
 
 # osx programs distributed as binaries
 brew_cask_pkgs="atom google-chrome gimp vlc iterm2 slack"
@@ -64,7 +64,7 @@ elif [[ $(uname) == 'Darwin' ]]; then
 fi
 
 # Install python versions
-pyenv install 2.7
+pyenv install 2.7.12
 pyenv install 3.5.2
 
 # Install fasd
