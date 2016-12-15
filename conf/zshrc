@@ -145,7 +145,7 @@ fi
 
 ## Misc
 # Aliases
-alias pclv='pcl_viewer'
+alias pclv='pcl_viewer -use_point_picking'
 
 # Make a directory and jump to it
 mkcd()
