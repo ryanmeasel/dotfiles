@@ -16,7 +16,7 @@ pkgs="make wget curl zsh vim git-flow tmux pyenv pyenv-virtualenv tree dos2unix"
 linux_pkgs="ttf-dejavu"
 
 # osx only pkgs
-brew_pkgs="caskroom/cask/brew-cask reattach-to-user-namespace android-platform-tools"
+brew_pkgs="caskroom/cask/brew-cask reattach-to-user-namespace android-platform-tools youtube-dl"
 
 # osx programs distributed as binaries
 brew_cask_pkgs="atom google-chrome gimp vlc iterm2 slack"
