@@ -7,5 +7,6 @@
 	ui = true
 [push]
 	default = simple
+	followTags = true
 [include]
     path = .gitconfig.local
