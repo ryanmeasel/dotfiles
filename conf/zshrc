@@ -42,7 +42,6 @@ antigen bundle fasd
 antigen bundle tmux
 antigen bundle common-aliases
 antigen bundle aws
-antigen bundle atom
 antigen bundle docker
 antigen bundle node
 antigen bundle npm
@@ -129,18 +128,6 @@ mkdir -p ~/.virtualenvs
 ## FASD
 # Initialize fasd
 eval "$(fasd --init auto)"
-
-
-## AWS
-# Load AWS credentials
-if [[ -e $HOME/.aws/exportCredentials.sh ]]; then
-    source $HOME/.aws/exportCredentials.sh
-
-    # Deploy an elastic beanstalk application locally
-    alias ebRunLocal='eb local run --envvars AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY'
-else
-    echo "WARNING: No AWS credentials found."
-fi
 
 
 ## Misc
