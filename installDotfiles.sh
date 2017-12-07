@@ -104,5 +104,5 @@ if [[ $(command -v zsh) ]]; then
     # Execute the new shell
     $(command -v zsh)
 else
-    printf "${RED}** ZSH has not been installed${NC}\n"
+    printf "${RED}** ZSH has not been installed. Please install ZSH and rerun this script.${NC}\n"
 fi
