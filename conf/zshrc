@@ -51,7 +51,6 @@ antigen bundle zsh-users/zsh-history-substring-search ./zsh-history-substring-se
 # OS X  packages
 if [[ $(uname) == 'Darwin' ]]; then
     antigen bundle brew
-    antigen bundle brew-cask
     antigen bundle osx
 fi
 
@@ -64,15 +63,6 @@ antigen apply
 
 
 ## Docker
-#Start up a docker machine
-dmstart()
-{
-    printf "${GREEN}++ Starting docker machine...${NOCOLOR}\n"
-    docker-machine start default
-    printf "Setting environment variables...\n"
-    eval $(docker-machine env default)
-    printf "${GREEN}++ Docker machine started.${NOCOLOR}\n"
-}
 
 # Remove all exited docker containers
 dcclean()
@@ -112,8 +102,6 @@ diclean()
 alias dcleanall='dcclean && dvclean && diclean'
 # Start the LaTeX container
 alias dlatex='docker run -it -v $(pwd):/latex/src/ ryanmeasel/latex bash'
-# Start the PCL container
-alias dpcl='docker run -it -v $(pwd):/pcl/src/ ryanmeasel/pcl-dev:ubuntu bash'
 
 
 ## Python environment

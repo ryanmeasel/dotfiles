@@ -16,10 +16,10 @@ pkgs="make wget curl zsh vim git-flow tmux pyenv pyenv-virtualenv tree dos2unix"
 linux_pkgs="ttf-dejavu"
 
 # osx only pkgs
-brew_pkgs="caskroom/cask/brew-cask reattach-to-user-namespace android-platform-tools youtube-dl"
+brew_pkgs="reattach-to-user-namespace youtube-dl"
 
 # osx programs distributed as binaries
-brew_cask_pkgs="atom google-chrome gimp vlc iterm2 slack"
+brew_cask_pkgs="google-chrome gimp vlc iterm2 slack visual-studio-code notion beardedspice caffeine spotify wireshark whatsapp docker"
 
 
 ## Installation
@@ -49,23 +49,10 @@ elif [[ $(uname) == 'Darwin' ]]; then
 
     printf "${GREEN}** Installing OS X packages...${NC}\n"
 
-    # Install Brew (OSX package manager)
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-
     # Install Brew pkgs and brew cask pacakges
     brew install $pkgs $brew_pkgs
     brew cask install $brew_cask_pkgs
-
-    # Install .NET Version Manager (DNVM) and .NET Execution Environment (DNX)
-    # for omnisharp use with Atom
-    curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh && source ~/.dnx/dnvm/dnvm.sh
-    dnvm install latest
-    dnvm upgrade -r mono
 fi
-
-# Install python versions
-pyenv install 2.7.12
-pyenv install 3.5.2
 
 # Install fasd
 printf "${GREEN}** Installing fasd...${NC}\n"

@@ -11,7 +11,7 @@ NC='\033[0m' # No Color
 repoDir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 # Grab a list of each non-directory/license/readme/backup/install file in the dotfiles repo
-dotfiles=$(ls $repoDir/conf/)
+dotfiles=$(ls -p $repoDir/conf/ | grep -v /)
 dotfiles=$(echo $dotfiles | tr '\n' ' ') # remove newlines so we can append the antigen file
 
 # Ensure the Antigen submodule was downloaded
@@ -66,6 +66,13 @@ for dotfile in $dotfiles; do
     ln -sf $repoDir/conf/$dotfile $HOME/.$dotfile
     printf "${GREEN}++ Generated symlink to $dotfile${NC}\n"
 done
+
+# Symlink VS Code settings
+if [[ $(uname) == 'Linux' ]]; then
+    ln -sf $repoDir/conf/vscode/settings.json $HOME/.config/Code/User/settings.json
+elif [[ $(uname) == 'Darwin' ]]; then
+    ln -sf $repoDir/conf/vscode/settings.json $HOME/Library/Application\ Support/Code/User/
+fi
 
 # Gather platform dependent configs
 localDotfiles=$(ls $repoDir/conf/ | grep $(uname))
