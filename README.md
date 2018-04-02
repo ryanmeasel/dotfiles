@@ -46,11 +46,3 @@ git clone --recursive https://github.com/ryanmeasel/dotfiles.git
 cd dotfiles
 ./installAll.sh
 ```
-
-
-## To do
-
-- Add Atom config
-- Update vimrc
-- Apply consistent theme
-- separate OSX only commands

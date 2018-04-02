@@ -30,7 +30,6 @@ createBackupDir () {
 }
 
 # Create symlinks for each of the dotfiles
-printf "Generating symlinks...\n"
 for dotfile in $dotfiles; do
 
     # Store any previously existing dotfiles in a backup directory
@@ -51,7 +50,7 @@ for dotfile in $dotfiles; do
             targetFile=$(ls -l $HOME/.$dotfile | awk '{print $11}')
 
             # Only make a backup if we aren't symlinking to the same file
-            if [[ $(diff $dotfile $targetFile) ]]; then
+            if [[ $(diff conf/$dotfile $targetFile) ]]; then
 
                 createBackupDir
 
@@ -74,6 +73,8 @@ elif [[ $(uname) == 'Darwin' ]]; then
     ln -sf $repoDir/conf/vscode/settings.json $HOME/Library/Application\ Support/Code/User/
 fi
 
+printf "${GREEN}++ Generated symlink to vscode/settings.json{NC}\n"
+
 # Gather platform dependent configs
 localDotfiles=$(ls $repoDir/conf/ | grep $(uname))
 
@@ -90,10 +91,15 @@ done
 ln -sf $repoDir/antigen/antigen.zsh $HOME/.antigen.zsh
 printf "${GREEN}++ Generated symlink to Antigen${NC}\n"
 
+# Solarized theme for Vim
+mkdir -p ~/.vim/colors
+wget -P ~/.vim/colors https://raw.githubusercontent.com/altercation/vim-colors-solarized/master/colors/solarized.vim > /dev/null
+printf "${GREEN}++ Installed Solarized theme for VIM.\n"
+
 # Change shell to zsh
 if [[ $(command -v zsh) ]]; then
 
-    printf "Changing shell to ZSH...\n"
+    printf "${GREEN}++ Changing shell to ZSH...${NC}\n"
 
     if [[ $SHELL != $(command -v zsh) ]]; then
 
@@ -103,13 +109,16 @@ if [[ $(command -v zsh) ]]; then
         fi
 
         chsh -s $(command -v zsh)
-        printf "${GREEN}:: Shell changed to ZSH${NC}\n"
+        printf "${GREEN}++ Shell changed to ZSH.${NC}\n"
     else
-        printf "ZSH is already running.\n"
+        printf "${GREEN}++ ZSH is already running.${NC}\n"
     fi
-
-    # Execute the new shell
-    $(command -v zsh)
 else
     printf "${RED}** ZSH has not been installed. Please install ZSH and rerun this script.${NC}\n"
+    exit 1
+fi
+
+# Instruct to configure iTerm2
+if [[ $(uname) == 'Darwin' ]]; then
+    printf "\n\n${GREEN}++ To configure iTerm 2, 'Preferences -> General -> Load preferences from a custom folder or URL'.${NC}\n"
 fi
