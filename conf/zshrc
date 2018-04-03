@@ -20,9 +20,9 @@ export PYTHON_CONFIGURE_OPTS="--enable-framework"
 
 ## Path
 # Golang environment
-export GOPATH=$HOME/GoogleDrive/Developer/sandbox/gocode
-export GOROOT=/usr/local/go
-export PATH=$GOROOT/bin:$GOPATH:"/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin:/Users/ryan/bin"
+export GOPATH=$HOME/sandbox/go
+export GOROOT=/usr/local/opt/go/libexec/
+export PATH=$PATH:$GOROOT/bin:$GOPATH
 
 
 ## ZSH Packages
@@ -129,3 +129,9 @@ mkcd()
     cd $1
 }
 
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/ryan/sandbox/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/ryan/sandbox/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/ryan/sandbox/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/ryan/sandbox/google-cloud-sdk/completion.zsh.inc'; fi
