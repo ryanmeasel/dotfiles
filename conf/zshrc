@@ -85,6 +85,18 @@ dvclean()
     printf "${GREEN}++ Done. ✔${NOCOLOR}\n"
 }
 
+# Print Dockerfile commands used to create an image 
+dc_trace_cmd() {
+  local parent=`docker inspect -f '{{ .Parent }}' $1` 2>/dev/null
+  declare -i level=$2
+  echo ${level}: `docker inspect -f '{{ .ContainerConfig.Cmd }}' $1 2>/dev/null`
+  level=level+1
+  if [ "${parent}" != "" ]; then
+    echo ${level}: $parent 
+    dc_trace_cmd $parent $level
+  fi
+}
+
 # Remove all dangling docker images
 diclean()
 {
@@ -102,6 +114,10 @@ diclean()
 alias dcleanall='dcclean && dvclean && diclean'
 # Start the LaTeX container
 alias dlatex='docker run -it -v $(pwd):/latex/src/ ryanmeasel/latex bash'
+# Git history ascending file sort, list all files in the git history in ascending size order
+#alias ghafs='git rev-list --objects --all| git cat-file --batch-check=\'%(objecttype) %(objectname) %(objectsize) %(rest)\'| sed -n 's/^blob //p' \
+#    | sort --numeric-sort --key=2 \
+#    | cut -c 1-12,41-'
 
 
 ## Python environment

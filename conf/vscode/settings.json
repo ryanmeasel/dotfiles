@@ -1,4 +1,8 @@
 {
     "editor.fontSize": 17,
-    "workbench.colorTheme": "Solarized Dark"
+    "workbench.colorTheme": "Solarized Dark",
+    "explorer.confirmDragAndDrop": false,
+    "editor.minimap.enabled": false,
+    "yaml.format.enable":  true,
+    "yaml.validate": true
 }
