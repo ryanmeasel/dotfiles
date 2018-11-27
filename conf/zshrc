@@ -1,68 +1,102 @@
-## Export variables
-# Text attributes
-export RED='\033[1;31m'
-export GREEN='\033[1;32m'
-export YELLOW='\033[1;33m'
-export BLUE='\033[1;34m'
-export PURPLE='\033[1;35m'
-export NOCOLOR='\033[0m'
-export BOLD='\033[1m'
-export UNDERLINE='\033[4m'
-
-# ZSH automatically launches into a tmux session on launch
-export ZSH_TMUX_AUTOSTART=false
-
-# Options for pyenv installs.
-# "--enable-framework" installs python as framework which allows it to display
-# gui elements such as those created by matplotlib.
-export PYTHON_CONFIGURE_OPTS="--enable-framework"
-
-
 ## Path
+
 # Golang environment
 export GOPATH=$HOME/sandbox/go
 export GOROOT=/usr/local/opt/go/libexec/
 export PATH=$PATH:$GOROOT/bin:$GOPATH
 
+# Google Cloud SDK
+if [ -f '/Users/ryan/sandbox/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/ryan/sandbox/google-cloud-sdk/path.zsh.inc'; fi
 
-## ZSH Packages
-source $HOME/.antigen.zsh
 
-# Load the oh-my-zsh's library.
-antigen use oh-my-zsh
+## ZSH Configuration
 
-# Bundles from the default repo (robbyrussell's oh-my-zsh).
-antigen bundle git
-antigen bundle git-extras
-antigen bundle git-flow
-antigen bundle pip
-antigen bundle jsontools
-antigen bundle command-not-found
-antigen bundle fasd
-antigen bundle tmux
-antigen bundle common-aliases
-antigen bundle aws
-antigen bundle docker
-antigen bundle node
-antigen bundle npm
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-history-substring-search ./zsh-history-substring-search.zsh
+# ZSH automatically launches into a tmux session on launch
+export ZSH_TMUX_AUTOSTART=false
 
-# OS X  packages
-if [[ $(uname) == 'Darwin' ]]; then
-    antigen bundle brew
-    antigen bundle osx
+# Enable shell command completion for gcloud.
+if [ -f '/Users/ryan/sandbox/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/ryan/sandbox/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Enable autocompletions
+autoload -Uz compinit
+typeset -i updated_at=$(date +'%j' -r ~/.zcompdump 2>/dev/null || stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)
+if [ $(date +'%j') != $updated_at ]; then
+  compinit -i
+else
+  compinit -C -i
 fi
+zmodload -i zsh/complist
 
-# Install the Pure theme
-antigen bundle mafredri/zsh-async
-antigen bundle sindresorhus/pure
+# Save history so we get auto suggestions
+HISTFILE=$HOME/.zsh_history
+HISTSIZE=100000
+SAVEHIST=$HISTSIZE
 
-# Apply the packages and theme
-antigen apply
+# Options
+setopt auto_cd # cd by typing directory name if it's not a command
+setopt auto_list # automatically list choices on ambiguous completion
+setopt auto_menu # automatically use menu completion
+setopt always_to_end # move cursor to end if word had one match
+setopt hist_ignore_all_dups # remove older duplicate entries from history
+setopt hist_reduce_blanks # remove superfluous blanks from history items
+setopt inc_append_history # save history entries as soon as they are entered
+setopt share_history # share history between different instances
+setopt correct_all # autocorrect commands
+setopt interactive_comments # allow comments in interactive shells
+
+# Improve autocompletion style
+zstyle ':completion:*' menu select # select completions with arrow keys
+zstyle ':completion:*' group-name '' # group results by category
+zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
+
+# Load antibody plugin manager
+source <(antibody init)
+
+# Load plugins
+antibody bundle bobthecow/git-flow-completion
+antibody bundle mafredri/zsh-async
+antibody bundle marzocchi/zsh-notify
+antibody bundle robbyrussell/oh-my-zsh path:plugins/command-not-found
+antibody bundle robbyrussell/oh-my-zsh path:plugins/docker
+antibody bundle robbyrussell/oh-my-zsh path:plugins/git
+antibody bundle robbyrussell/oh-my-zsh path:plugins/git-flow
+antibody bundle robbyrussell/oh-my-zsh path:plugins/jsontools
+antibody bundle robbyrussell/oh-my-zsh path:plugins/osx/spotify
+antibody bundle robbyrussell/oh-my-zsh path:plugins/pip
+antibody bundle robbyrussell/oh-my-zsh path:plugins/tmux
+antibody bundle sindresorhus/pure
+antibody bundle zdharma/fast-syntax-highlighting
+antibody bundle zsh-users/zsh-autosuggestions
+antibody bundle zsh-users/zsh-history-substring-search
+antibody bundle zsh-users/zsh-completions
+
+# Keybindings
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey '^[[3~' delete-char
+bindkey '^[3;5~' delete-char
 
 
-## Docker
+## Python environment 
+
+# "--enable-framework" installs python as framework which allows it to display
+# gui elements such as those created by matplotlib.
+export PYTHON_CONFIGURE_OPTS="--enable-framework"
+# Enable shims and autocomplete for pyenv
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+# Auto-activate pyenv-virtualenv
+if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+# Default directory for virtual environments
+mkdir -p ~/.virtualenvs
+
+
+## FASD
+
+# Initialize fasd
+eval "$(fasd --init auto)"
+
+
+## Custom functions
 
 # Remove all exited docker containers
 dcclean()
@@ -110,35 +144,7 @@ diclean()
     printf "${GREEN}++ Done. ✔${NOCOLOR}\n"
 }
 
-# Clean all volumes, containers, and images
-alias dcleanall='dcclean && dvclean && diclean'
-# Start the LaTeX container
-alias dlatex='docker run -it -v $(pwd):/latex/src/ ryanmeasel/latex bash'
-# Git history ascending file sort, list all files in the git history in ascending size order
-#alias ghafs='git rev-list --objects --all| git cat-file --batch-check=\'%(objecttype) %(objectname) %(objectsize) %(rest)\'| sed -n 's/^blob //p' \
-#    | sort --numeric-sort --key=2 \
-#    | cut -c 1-12,41-'
-
-
-## Python environment
-# Enable shims and autocomplete for pyenv
-if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
-# Auto-activate pyenv-virtualenv
-if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
-# Default directory for virtual environments
-mkdir -p ~/.virtualenvs
-
-
-## FASD
-# Initialize fasd
-eval "$(fasd --init auto)"
-
-
-## Misc
-# Aliases
-alias pclv='pcl_viewer -use_point_picking'
-
-# Make a directory and jump to it
+# Make a directory and change to it
 mkcd()
 {
     mkdir -p $1
@@ -146,8 +152,16 @@ mkcd()
 }
 
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/ryan/sandbox/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/ryan/sandbox/google-cloud-sdk/path.zsh.inc'; fi
+## Aliases
 
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/ryan/sandbox/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/ryan/sandbox/google-cloud-sdk/completion.zsh.inc'; fi
+# Clean all volumes, containers, and images
+alias dcleanall='dcclean && dvclean && diclean'
+# Start the LaTeX container
+alias dlatex='docker run -it -v $(pwd):/latex/src/ ryanmeasel/latex bash'
+
+alias pclv='pcl_viewer -use_point_picking'
+
+# Git history ascending file sort, list all files in the git history in ascending size order
+#alias ghafs='git rev-list --objects --all| git cat-file --batch-check=\'%(objecttype) %(objectname) %(objectsize) %(rest)\'| sed -n 's/^blob //p' \
+#    | sort --numeric-sort --key=2 \
+#    | cut -c 1-12,41-'

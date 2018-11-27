@@ -16,7 +16,7 @@ pkgs="make wget curl zsh vim git-flow tmux pyenv pyenv-virtualenv tree dos2unix"
 linux_pkgs="ttf-dejavu"
 
 # osx only pkgs
-brew_pkgs="reattach-to-user-namespace youtube-dl"
+brew_pkgs="reattach-to-user-namespace getantibody/tap/antibody"
 
 # osx programs distributed as binaries
 brew_cask_pkgs="google-chrome gimp vlc iterm2 slack visual-studio-code notion beardedspice caffeine spotify wireshark whatsapp docker"
