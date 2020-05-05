@@ -14,12 +14,6 @@ repoDir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 dotfiles=$(ls -p $repoDir/conf/ | grep -v /)
 dotfiles=$(echo $dotfiles | tr '\n' ' ') # remove newlines so we can append the antigen file
 
-# Ensure the Antigen submodule was downloaded
-if [[ ! -e $repoDir/antigen/antigen.zsh ]]; then
-    printf "${RED}** Antigen submodule has not been downloaded. Install with:\n\n\t git submodule update --init --recursive\n${NC}"
-    exit 1
-fi
-
 # Function to create a backup dir. Only invoked if a backup needs to be stored.
 createBackupDir () {
     # Create the backup directory if it doesn't exist
@@ -86,10 +80,6 @@ for dotfile in $localDotfiles; do
     ln -sf $repoDir/conf/$dotfile $HOME/.$targetFile
     printf "${GREEN}++ Generated symlink to $dotfile${NC}\n"
 done
-
-# Symlink Antigen (oh-my-zsh package manager)
-ln -sf $repoDir/antigen/antigen.zsh $HOME/.antigen.zsh
-printf "${GREEN}++ Generated symlink to Antigen${NC}\n"
 
 # Solarized theme for Vim
 mkdir -p ~/.vim/colors
