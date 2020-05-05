@@ -5,5 +5,8 @@
     "editor.minimap.enabled": false,
     "yaml.format.enable":  true,
     "yaml.validate": true,
-    "window.zoomLevel": 1
+    "window.zoomLevel": -1,
+    "workbench.startupEditor": "newUntitledFile",
+    "explorer.confirmDelete": false,
+    "workbench.tree.indent": 20
 }
